@@ -1,0 +1,14 @@
+C:\Code\GithubRepos\InputController\bin\Debug\net9.0\InputController.exe
+C:\Code\GithubRepos\InputController\bin\Debug\net9.0\InputController.deps.json
+C:\Code\GithubRepos\InputController\bin\Debug\net9.0\InputController.runtimeconfig.json
+C:\Code\GithubRepos\InputController\bin\Debug\net9.0\InputController.dll
+C:\Code\GithubRepos\InputController\bin\Debug\net9.0\InputController.pdb
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.GeneratedMSBuildEditorConfig.editorconfig
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.AssemblyInfoInputs.cache
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.AssemblyInfo.cs
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.csproj.CoreCompileInputs.cache
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.dll
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\refint\InputController.dll
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.pdb
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\InputController.genruntimeconfig.cache
+C:\Code\GithubRepos\InputController\obj\Debug\net9.0\ref\InputController.dll
