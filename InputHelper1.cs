@@ -3,8 +3,16 @@ using System.Runtime.InteropServices;
 
 namespace MyInputLibrary
 {
+    
     public static class InputHelper1
     {
+
+        [DllImport("user32.dll")]
+        private static extern short VkKeyScanEx(char ch, IntPtr dwhkl);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetKeyboardLayout(uint idThread);
+        
         public static bool TestingMode {get; set; } = false;
 
         private static List<INPUT> _capturedInputs = new List<INPUT>();
@@ -202,56 +210,19 @@ namespace MyInputLibrary
         }
         public static ushort CharToVk(char c, out bool shift)
         {
-            shift = false;
-            if (c >= 'A' && c <= 'Z')
+            // key combinations are layout dependent
+            IntPtr layout = GetKeyboardLayout(0); 
+            short vkAndModifiers = VkKeyScanEx(c, layout);
+            if (vkAndModifiers == -1)
             {
-                shift = true;
-                return (ushort)(c - 'A' + 0x41);
+                // character cannot be typed on this layout
+                shift = false;
+                return 0;
             }
-            else if (c >= 'a' && c <= 'z')
-            {
-                return (ushort)(c - 'a' + 0x41);
-            }
-            else if (c >= '0' && c <= '9')
-            {
-                return (ushort)(c - '0' + 0x30);
-            }
-            else
-            {
-                switch (c)
-                {
-                    case ' ': return 0x20; // space
-                    case '!': shift = true; return 0x31; // Shift+1
-                    case '@': shift = true; return 0x32; // Shift+2
-                    case '#': shift = true; return 0x33;
-                    case '$': shift = true; return 0x34;
-                    case '%': shift = true; return 0x35;
-                    case '^': shift = true; return 0x36;
-                    case '&': shift = true; return 0x37;
-                    case '*': shift = true; return 0x38;
-                    case '(': shift = true; return 0x39;
-                    case ')': shift = true; return 0x30;
-                    case '.': return 0xBE; // period
-                    case ',': return 0xBC;
-                    case '?': shift = true; return 0xBF;
-                    case ':': shift = true; return 0xBA;
-                    case ';': return 0xBA;
-                    case '\'': return 0xDE;
-                    case '\"': shift = true; return 0xDE;
-                    case '\b': return 0x08; // Backspace
-                    case '\t': return 0x09; // Tab
-                    case '\r': return 0x0D; // Enter
-                    case '-': return 0xBD;
-                    case '_': shift = true; return 0xBD;
-                    case '=': return 0xBB;
-                    case '+': shift = true; return 0xBB;
-                    case '/': return 0xBF;
-                    case '\\': return 0xDC;
-                    case '[': return 0xDB;
-                    case ']': return 0xDD;
-                    default: return 0; // unsupported char
-                }
-            }
+            shift = (vkAndModifiers & 0x0100) != 0;
+            ushort vk = (ushort)(vkAndModifiers & 0xFF);
+
+            return vk;
         }
 
         public static void MoveMouseRelative(int move_x, int move_y)
